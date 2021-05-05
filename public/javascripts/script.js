@@ -25,7 +25,11 @@ navigator.mediaDevices.getUserMedia({
         console.log("User Connected " + userId)
         connectToNewUser(userId, stream)
     })
+}).catch( err => {
+    console.log('Error')
+    return 'error'
 })
+
 
 socket.on('user-disconnected', userId => {
     if (peers[userId]) peers[userId].close()
@@ -55,3 +59,18 @@ function addVideoStream(video, stream) {
     })
     videoGrid.append(video)
 }
+
+document.querySelector('.submit').addEventListener('click', () => {
+    const input = document.querySelector('.input')
+    console.log(input.value)
+
+    socket.emit('chat message',input.value)
+})
+
+socket.on('chat message', message => {
+    const chat = document.querySelector('.message')
+    const msg = document.createElement('div')
+    msg.classList.add('msg')
+    msg.textContent = message
+    chat.appendChild(msg)
+})
