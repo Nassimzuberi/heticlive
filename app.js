@@ -11,7 +11,8 @@ var usersRouter = require('./routes/users');
 
 const app = express()
 
-app.use('/users', usersRouter);
+app.use(cors())
+
 var createError = require('http-errors');
 
 
@@ -25,7 +26,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cors())
+app.use('/users', usersRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
