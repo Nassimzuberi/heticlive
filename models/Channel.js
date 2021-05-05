@@ -4,7 +4,12 @@ var mongoose = require('mongoose'),
 var ChannelSchema = new Schema({
     name: {type: String,require:true, unique:true},
     state: {type: Boolean},
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
     
 })
 
-module.exports = mongoose.model('Channel',ChannelSchema)
+
+module.exports = mongoose.model('Channel',ChannelSchema);
