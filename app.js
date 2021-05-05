@@ -8,10 +8,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var usersRouter = require('./routes/users');
+var channelRouter = require('./routes/channel');
 
 const app = express()
 
 app.use('/users', usersRouter);
+app.use('/channels', channelRouter);
 var createError = require('http-errors');
 
 
@@ -52,6 +54,7 @@ const io = require('socket.io')(server)
 const  dbURI = "mongodb://localhost/heticlive"
 
 require('./models/User')
+require('./models/Channel')
 mongoose.connect(dbURI , {useNewUrlParser: true, useUnifiedTopology: true})
 const db = mongoose.connection
 
