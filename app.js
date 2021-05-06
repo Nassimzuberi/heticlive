@@ -1,6 +1,7 @@
 
 const express = require('express')
 const mongoose = require("mongoose")
+require('dotenv').config()
 
 const cors = require('cors');
 const path = require('path');
@@ -53,7 +54,7 @@ const server = require('http').Server(app)
 const io = require('socket.io')(server)
 // const { v4: uuidV4 } = require('uuid')
 
-const  dbURI = "mongodb+srv://pmd:2020@heticlive.jgxwc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const  dbURI = "mongodb+srv://"+process.env.DB_USER + ":"+ process.env.DB_PASSWORD +"@heticlive.jgxwc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 require('./models/User')
 require('./models/Channel')

@@ -16,7 +16,7 @@ const config = {
             allow_origin: '*'
         },
         relay: {
-            ffmpeg: 'D:/ffmpeg/bin/ffmpeg.exe',
+            ffmpeg: process.env.FFMPEG_PATH,
             tasks: [
                 {
                     app: 'stream',
@@ -26,7 +26,7 @@ const config = {
             ],
         },
         trans: {
-            ffmpeg: 'D:/ffmpeg/bin/ffmpeg.exe',
+            ffmpeg: process.env.FFMPEG_PATH,
             tasks: [
                 {
                     app: 'live',
@@ -38,7 +38,7 @@ const config = {
             ]
         },
         fission: {
-            ffmpeg: 'D:/ffmpeg/bin/ffmpeg.exe',
+            ffmpeg: process.env.FFMPEG_PATH,
             tasks: [
                 {
                     rule: "live/*",
