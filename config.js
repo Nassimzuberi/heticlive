@@ -15,6 +15,16 @@ const config = {
             mediaroot: './server/media',
             allow_origin: '*'
         },
+        relay: {
+            ffmpeg: 'D:/ffmpeg/bin/ffmpeg.exe',
+            tasks: [
+                {
+                    app: 'stream',
+                    mode: 'push',
+                    edge: 'rtmp://localhost/hls',
+                },
+            ],
+        },
         trans: {
             ffmpeg: 'D:/ffmpeg/bin/ffmpeg.exe',
             tasks: [
@@ -25,6 +35,34 @@ const config = {
                     dash: true,
                     dashFlags: '[f=dash:window_size=3:extra_window_size=5]'
                 }
+            ]
+        },
+        fission: {
+            ffmpeg: 'D:/ffmpeg/bin/ffmpeg.exe',
+            tasks: [
+                {
+                    rule: "live/*",
+                    model: [
+                        {
+                            ab: "128k",
+                            vb: "1500k",
+                            vs: "1280x720",
+                            vf: "30",
+                        },
+                        {
+                            ab: "96k",
+                            vb: "1000k",
+                            vs: "854x480",
+                            vf: "24",
+                        },
+                        {
+                            ab: "96k",
+                            vb: "600k",
+                            vs: "640x360",
+                            vf: "20",
+                        },
+                    ]
+                },
             ]
         }
     }

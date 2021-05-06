@@ -1,36 +1,24 @@
 const mongoose = require('mongoose')
 const NodeMediaServer = require('node-media-server'),
     config = require('./config').rtmp_server;
-
-nms = new NodeMediaServer(config);
+const nms = new NodeMediaServer(config);
 
 const Channel = mongoose.model('Channel');
 
 nms.on('prePublish', async (id, StreamPath, args) => {
     let stream_key = getStreamKeyFromStreamPath(StreamPath);
     console.log('[NodeEvent on prePublish]', `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`);
-
-    Channel.findOne({stream_key: stream_key}, (err, channel) => {
-        if (!err) {
-            if (!channel) {
-                let session = nms.getSession(id);
-
-                session.reject();
-            } else {
-            }
-        }
-    });
 });
 
 nms.on('postPublish', (id, StreamPath, args) => {
     let stream_key = getStreamKeyFromStreamPath(StreamPath);
     console.log('[NodeEvent on prePublish]', `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`);
+    let key = stream_key.split('_')
 
-    Channel.findOne({stream_key: stream_key}, (err, channel) => {
+    Channel.findOne({stream_key: key[0]}, (err, channel) => {
         if (!err) {
             if (!channel) {
                 let session = nms.getSession(id);
-
                 session.reject();
             } else {
                 channel.state = true
@@ -42,9 +30,12 @@ nms.on('postPublish', (id, StreamPath, args) => {
 
 nms.on('donePublish', (id, StreamPath, args) => {
     let stream_key = getStreamKeyFromStreamPath(StreamPath);
+
+    let key = stream_key.split('_')
+    console.log(stream_key)
     console.log('[NodeEvent on prePublish]', `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`);
 
-    Channel.findOne({stream_key: stream_key}, (err, channel) => {
+    Channel.findOne({stream_key: key[0]}, (err, channel) => {
         if (!err) {
             if (!channel) {
                 let session = nms.getSession(id);

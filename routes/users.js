@@ -10,10 +10,13 @@ router.get('/', async function(req, res, next) {
 });
 router.post('/', async function(req, res, next) {
   //params
-  var username = req.body.username;
-  var password = req.body.password;
-  if(username == "" || password == "") {
+  const {username, password,confirmPassword} = req.body;
+
+  if(username === "" || password === "") {
     return res.status(400).json({'error': 'Veuillez remplir tous les champs obligatoires'});
+  }
+  if(confirmPassword !== password) {
+    return res.status(400).json({'error': 'Les mots de passe ne correspondent pas'});
   }
 
   // verifications
@@ -21,7 +24,6 @@ router.post('/', async function(req, res, next) {
     username: username
   })
       .then(function(userFound) {
-        console.log(userFound)
 
         if(userFound.length === 0) {
           bcrypt.hash(password, 5, function(err, bcryptedPassword){
@@ -31,6 +33,7 @@ router.post('/', async function(req, res, next) {
             })
                 .then(function(newUser) {
                   return res.status(201).json({
+                      "success": "L'utilisateur a bien été enregistré. Connectez vous",
                     'userId' : newUser.id
                   })
                 })
@@ -45,8 +48,8 @@ router.post('/', async function(req, res, next) {
       .catch(function(err) {
         return res.status(500).json({'error': 'unable to verify the user'});
       });
-  // res.json(await mongoose.model('User').create(req.body));
 });
+
 router.put('/:id', async function(req, res, next) {
   res.json(await mongoose.model('User').findByIdAndUpdate(req.params.id,req.body));
 });
@@ -89,4 +92,10 @@ router.post('/login', async function(req,res,next){
         return res.status(500).json({'error': 'unable to verify user'});
       });
 })
+
+router.get('/:id/channels', async function(req, res, next) {
+    res.json(await mongoose.model('Channel').find({user: req.params.id}));
+
+});
+
 module.exports = router;
