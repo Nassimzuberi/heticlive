@@ -3,10 +3,12 @@ var mongoose = require('mongoose'),
 
 var ChannelSchema = new Schema({
     name: {type: String,require:true, unique:true},
-    state: {type: Boolean},
+    state: {type: Boolean, default: false},
+    stream_key : {type: String,require:true, unique:true},
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        require:true,
     }
     
 })
