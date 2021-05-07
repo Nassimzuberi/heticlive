@@ -96,5 +96,5 @@ node_media_server.run();
 
 module.exports = app;
 
-server.listen(8080)
+server.listen(process.env.PORT || 3001)
 
