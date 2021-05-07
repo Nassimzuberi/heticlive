@@ -50,10 +50,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-const server = require('http').Server(app)
-const io = require('socket.io')(server)
-// const { v4: uuidV4 } = require('uuid')
-
 const  dbURI = "mongodb+srv://"+process.env.DB_USER + ":"+ process.env.DB_PASSWORD +"@heticlive.jgxwc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 require('./models/User')
@@ -66,6 +62,12 @@ db.once("open", () => {console.log("DB started successfully")})
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
+
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
+// const { v4: uuidV4 } = require('uuid')
+
+
 
 io.on("connection", (socket) => {
 
@@ -94,5 +96,5 @@ node_media_server.run();
 
 module.exports = app;
 
-server.listen(3001)
+server.listen(8080)
 
