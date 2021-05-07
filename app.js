@@ -50,7 +50,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-const  dbURI = "mongodb+srv://"+process.env.DB_USER + ":"+ process.env.DB_PASSWORD +"@heticlive.jgxwc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const  dbURI = process.env.DB_URI
 
 require('./models/User')
 require('./models/Channel')
