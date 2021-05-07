@@ -21,7 +21,7 @@ const config = {
                 {
                     app: 'stream',
                     mode: 'push',
-                    edge: 'rtmp://localhost/hls',
+                    edge: 'rtmp://'+ process.env.URN +'/hls',
                 },
             ],
         },
